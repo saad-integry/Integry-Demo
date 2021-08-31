@@ -1,0 +1,267 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "Instagram API Design Document For CMPE-281",
+    "version": "1.0.0",
+    "title": "Instagram API",
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "tags": [
+    {
+      "name": "account",
+      "description": "Calls related to account service"
+    },
+    {
+      "name": "post",
+      "description": "Calls related to post service"
+    },
+    {
+      "name": "comment",
+      "description": "Calls related to comment service"
+    },
+    {
+      "name": "like",
+      "description": "Calls related to like service"
+    },
+    {
+      "name": "follow",
+      "description": "Calls related to follow service"
+    },
+    {
+      "name": "timeline",
+      "description": "Calls related to timeline service"
+    }
+  ],
+  "paths": {
+    "/signup": {
+      "post": {
+        "tags": [
+          "account"
+        ],
+        "summary": "User signup",
+        "description": "Signup operation for a user",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "successful signup"
+          },
+          "400": {
+            "description": "bad input parameter"
+          }
+        }
+      }
+    },
+    "/login": {
+      "post": {
+        "tags": [
+          "account"
+        ],
+        "summary": "User login",
+        "description": "Login operation for user",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "successful login"
+          },
+          "400": {
+            "description": "bad input parameter"
+          }
+        }
+      }
+    },
+    "/posts/{id}": {
+      "get": {
+        "tags": [
+          "post"
+        ],
+        "summary": "Get all post for a certain user",
+        "description": "Get all post for a certain user, this will be used for populating timeline",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/userId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Posts retrieved successfully"
+          },
+          "400": {
+            "description": "bad input parameter"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "post"
+        ],
+        "summary": "Add new post for a user",
+        "description": "User can upload a new post using this route",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/userId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operation successfull"
+          },
+          "400": {
+            "description": "Bad input parameter"
+          }
+        }
+      }
+    },
+    "/comment/{id}": {
+      "get": {
+        "tags": [
+          "comment"
+        ],
+        "summary": "Get all comments for a certain post",
+        "description": "Get all post for a certain post, this will be used for populating timeline",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/postId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Comments retrieved successfully"
+          },
+          "400": {
+            "description": "bad input parameter"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "comment"
+        ],
+        "summary": "Add new comment for a post",
+        "description": "User can add new comment for a post",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/postId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operation successfull"
+          },
+          "400": {
+            "description": "Bad input parameter"
+          }
+        }
+      }
+    },
+    "/like/{id}": {
+      "get": {
+        "tags": [
+          "like"
+        ],
+        "summary": "Get all likes for a certain post",
+        "description": "Get all likes for a certain post, this will be used for populating timeline",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/postId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Likes retrieved successfully"
+          },
+          "400": {
+            "description": "bad input parameter"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "like"
+        ],
+        "summary": "Add new like for a post",
+        "description": "User can add new like for a post",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/postId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operation successfull"
+          },
+          "400": {
+            "description": "Bad input parameter"
+          }
+        }
+      }
+    },
+    "/follow/{id}": {
+      "get": {
+        "tags": [
+          "follow"
+        ],
+        "summary": "Get all followers for a certain user",
+        "description": "Get all followers for a certain user, this will be used for populating timeline",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/userId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Followers retrieved successfully"
+          },
+          "400": {
+            "description": "bad input parameter"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "follow"
+        ],
+        "summary": "Add new like for a post",
+        "description": "User can add new like for a post",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/userId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operation successfull"
+          },
+          "400": {
+            "description": "Bad input parameter"
+          }
+        }
+      }
+    },
+    "/timeline/{id}": {
+      "get": {
+        "tags": [
+          "timeline"
+        ],
+        "summary": "Get timeline for a certain user",
+        "description": "This will be used for populating timeline",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/userId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Timeline retrieved successfully"
+          },
+          "400": {
+            "description": "bad input parameter"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {}
+}
