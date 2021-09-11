@@ -1020,7 +1020,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ListFulfillmentsw~1oparametersresponse"
+                  "$ref": "#/components/schemas/ListFulfillmentsw/oparametersresponse"
                 },
                 "example": {
                   "fulfillments": [
