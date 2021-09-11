@@ -3,7 +3,6 @@
   "info": {
     "title": "ShipStation Developer Portal",
     "description": "# Integrating with ShipStation\n\nShipStation strives to streamline shipping for online sellers, no matter where they sell their products online. ",
-    "contact": {},
     "version": "1.0"
   },
   "servers": [
