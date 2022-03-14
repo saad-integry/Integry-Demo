@@ -858,7 +858,7 @@
             "required": false,
             "description": "When specified with a date and time value, response only includes the objects that are modified on or after the date and time specified. If you need to keep track of frequent changes, it may be more useful to use Get Sheet Version.",
             "schema": {
-              "$ref": "#/components/schemas/Attachment/properties/createdAt"
+              "$ref": "#/components/schemas/CreatedAt"
             }
           },
           {
@@ -1241,7 +1241,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/paths/~1contacts/get/responses/200/content/application~1json/schema/allOf/1/properties/data/items"
+                  "$ref": "#/components/schemas/Contact"
                 }
               }
             }
@@ -2118,7 +2118,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Folder/properties/folders/items"
+                  "$ref": "#/components/schemas/Folder"
                 }
               }
             }
@@ -2269,7 +2269,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/paths/~1folders~1%7BfolderId%7D/get/responses/200/content/application~1json/schema"
+                "$ref": "#/components/schemas/Folder"
               }
             }
           }
@@ -2288,7 +2288,7 @@
                       "type": "object",
                       "properties": {
                         "result": {
-                          "$ref": "#/paths/~1folders~1%7BfolderId%7D/get/responses/200/content/application~1json/schema"
+                          "$ref": "#/components/schemas/Folder"
                         }
                       }
                     }
@@ -2554,7 +2554,7 @@
                         "result": {
                           "type": "array",
                           "items": {
-                            "$ref": "#/components/schemas/Folder/properties/folders/items"
+                            "$ref": "#/components/schemas/Folder"
                           }
                         }
                       }
@@ -3326,10 +3326,10 @@
                                 "example": 2331373580117892
                               },
                               "createdAt": {
-                                "$ref": "#/components/schemas/Attachment/properties/createdAt"
+                                "$ref": "#/components/schemas/CreatedAt"
                               },
                               "modifiedAt": {
-                                "$ref": "#/components/schemas/Attachment/properties/createdAt"
+                                "$ref": "#/components/schemas/CreatedAt"
                               }
                             }
                           }
@@ -4028,7 +4028,7 @@
                     "folders": {
                       "type": "array",
                       "items": {
-                        "$ref": "#/components/schemas/Folder/properties/folders/items"
+                        "$ref": "#/components/schemas/Folder"
                       }
                     },
                     "reports": {
@@ -4156,7 +4156,7 @@
                         "result": {
                           "type": "array",
                           "items": {
-                            "$ref": "#/components/schemas/Folder/properties/folders/items"
+                            "$ref": "#/components/schemas/Folder"
                           }
                         }
                       }
@@ -4699,7 +4699,7 @@
                     "type": "string"
                   },
                   "formatDetails": {
-                    "$ref": "#/components/schemas/SheetEmail/properties/formatDetails"
+                    "$ref": "#/components/schemas/FormatDetails"
                   }
                 }
               }
@@ -4789,30 +4789,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "readOnlyFullAccessibleBy": {
-                      "description": "Indicates who can access the 'Read-Only Full' view of the published report:\n* If **ALL**, it is available to anyone who has the link.\n* If **ORG**, it is available only to members of the report owner's Smartsheet organization account.\n* If **SHARED**, it is available only to users shared to the item.\n\nOnly returned in a response if **readOnlyFullEnabled** = **true**.\n",
-                      "type": "string"
-                    },
-                    "readOnlyFullDefaultView": {
-                      "description": "Indicates which view the user has set for a read-only, default view of the published report. Must be one of\nthe following values: **CALENDAR**, **CARD**, or **GRID**.\n",
-                      "type": "string"
-                    },
-                    "readOnlyFullEnabled": {
-                      "description": "(Required) If **true**, a rich version of the report is published with the ability to download row\nattachments and discussions.\n",
-                      "type": "boolean"
-                    },
-                    "readOnlyFullShowToolbar": {
-                      "deprecated": true,
-                      "description": "Indicates whether the left nav toolbar is displayed. The default, or **true**, is to display the toolbar.\nIf **false**, hides the toolbar.\n",
-                      "type": "boolean"
-                    },
-                    "readOnlyFullUrl": {
-                      "description": "URL for 'Read-Only Full' view of the published report.\n\nOnly returned in a response if **readOnlyFullEnabled** = **true**.\n",
-                      "type": "string"
-                    }
-                  }
+                  "$ref": "#/components/schemas/ReportPublish"
                 }
               }
             }
@@ -4882,7 +4859,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/paths/~1reports~1%7BreportId%7D~1publish/get/responses/200/content/application~1json/schema"
+                "$ref": "#/components/schemas/ReportPublish"
               }
             }
           }
@@ -5029,63 +5006,12 @@
               "schema": {
                 "oneOf": [
                   {
-                    "type": "object",
-                    "properties": {
-                      "id": {
-                        "description": "Share Id.\n\n**NOTE**: unlike other Smartsheet object Ids, this Id is an alphanumeric string.\n",
-                        "type": "string"
-                      },
-                      "groupId": {
-                        "description": "Group Id if the share is a group share, else null.",
-                        "type": "number"
-                      },
-                      "userId": {
-                        "description": "User Id if the share is a user share, else null.",
-                        "type": "number"
-                      },
-                      "type": {
-                        "description": "The type of this share. One of the following values: GROUP or USER.\n",
-                        "type": "string"
-                      },
-                      "accessLevel": {
-                        "$ref": "#/components/schemas/Discussion/properties/accessLevel"
-                      },
-                      "ccMe": {
-                        "description": "Indicates whether to send a copy of the email to the sharer of the sheet. You can specify this attribute\nin a request, but it is never present in a response.\n",
-                        "type": "boolean"
-                      },
-                      "createdAt": {
-                        "$ref": "#/components/schemas/Attachment/properties/createdAt"
-                      },
-                      "email": {
-                        "description": "User's primary email address for user shares; null for group shares.",
-                        "type": "string"
-                      },
-                      "message": {
-                        "description": "The message included in the body of the email that is optionally sent to the recipient. You can specify\nthis attribute in a request, but it is never present in a response.\n",
-                        "type": "string"
-                      },
-                      "modifiedAt": {
-                        "$ref": "#/components/schemas/Attachment/properties/createdAt"
-                      },
-                      "name": {
-                        "description": "If a user share and user is also a contact, the user's full name. If a group share, the group's name.",
-                        "type": "string"
-                      },
-                      "scope": {
-                        "description": "The scope of this share. One of the following values:\n  * **ITEM**: an item-level share (that is, the specific object\nto which the share applies is shared with\n    the user or group).\n  * **WORKSPACE**: a workspace-level share (that is, the workspace\nthat contains the object to which the\n    share applies is shared with the user or group).\n",
-                        "type": "string"
-                      },
-                      "subject": {
-                        "description": "The subject of the email that is optionally sent to notify the recipient. You can specify this attribute\nin a request, but it is never present in a response.\n",
-                        "type": "string"
-                      }
-                    }
+                    "$ref": "#/components/schemas/Share"
                   },
                   {
                     "type": "array",
                     "items": {
-                      "$ref": "#/paths/~1reports~1%7BreportId%7D~1shares/post/requestBody/content/application~1json/schema/oneOf/0"
+                      "$ref": "#/components/schemas/Share"
                     }
                   }
                 ]
@@ -5109,12 +5035,12 @@
                         "result": {
                           "oneOf": [
                             {
-                              "$ref": "#/paths/~1reports~1%7BreportId%7D~1shares/post/requestBody/content/application~1json/schema/oneOf/0"
+                              "$ref": "#/components/schemas/Share"
                             },
                             {
                               "type": "array",
                               "items": {
-                                "$ref": "#/paths/~1reports~1%7BreportId%7D~1shares/post/requestBody/content/application~1json/schema/oneOf/0"
+                                "$ref": "#/components/schemas/Share"
                               }
                             }
                           ]
@@ -5233,7 +5159,7 @@
                         "result": {
                           "type": "array",
                           "items": {
-                            "$ref": "#/paths/~1reports~1%7BreportId%7D~1shares/post/requestBody/content/application~1json/schema/oneOf/0"
+                            "$ref": "#/components/schemas/Share"
                           }
                         }
                       }
@@ -5325,7 +5251,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/paths/~1reports~1%7BreportId%7D~1shares/post/requestBody/content/application~1json/schema/oneOf/0"
+                  "$ref": "#/components/schemas/Share"
                 }
               }
             }
@@ -6323,7 +6249,7 @@
             "description": "Filter to return only rows that have been modified since the date/time provided. Date should be in ISO-8601 format.",
             "example": "2020-01-30T20:25:32.000Z",
             "schema": {
-              "$ref": "#/components/schemas/Attachment/properties/createdAt"
+              "$ref": "#/components/schemas/CreatedAt"
             }
           }
         ],
@@ -7292,7 +7218,7 @@
                                 "description": "A timestamp of when the rule was originally added.",
                                 "allOf": [
                                   {
-                                    "$ref": "#/components/schemas/Attachment/properties/createdAt"
+                                    "$ref": "#/components/schemas/CreatedAt"
                                   }
                                 ]
                               },
@@ -7329,7 +7255,7 @@
                                 "description": "The datetime for when the change was made to the rule.",
                                 "allOf": [
                                   {
-                                    "$ref": "#/components/schemas/Attachment/properties/createdAt"
+                                    "$ref": "#/components/schemas/CreatedAt"
                                   }
                                 ]
                               },
@@ -10627,7 +10553,7 @@
                               ]
                             },
                             "sentAt": {
-                              "$ref": "#/components/schemas/Attachment/properties/createdAt"
+                              "$ref": "#/components/schemas/CreatedAt"
                             },
                             "isDownloadable": {
                               "description": "Indicates whether the description is downloadable.",
@@ -11288,10 +11214,10 @@
                                 "type": "boolean"
                               },
                               "createdAt": {
-                                "$ref": "#/components/schemas/Attachment/properties/createdAt"
+                                "$ref": "#/components/schemas/CreatedAt"
                               },
                               "modifiedAt": {
-                                "$ref": "#/components/schemas/Attachment/properties/createdAt"
+                                "$ref": "#/components/schemas/CreatedAt"
                               },
                               "cells": {
                                 "description": "Cells objects.",
@@ -11565,10 +11491,10 @@
                                 "type": "boolean"
                               },
                               "createdAt": {
-                                "$ref": "#/components/schemas/Attachment/properties/createdAt"
+                                "$ref": "#/components/schemas/CreatedAt"
                               },
                               "modifiedAt": {
-                                "$ref": "#/components/schemas/Attachment/properties/createdAt"
+                                "$ref": "#/components/schemas/CreatedAt"
                               },
                               "cells": {
                                 "description": "Cells objects.",
@@ -12043,10 +11969,10 @@
                           }
                         },
                         "createdAt": {
-                          "$ref": "#/components/schemas/Attachment/properties/createdAt"
+                          "$ref": "#/components/schemas/CreatedAt"
                         },
                         "modifiedAt": {
-                          "$ref": "#/components/schemas/Attachment/properties/createdAt"
+                          "$ref": "#/components/schemas/CreatedAt"
                         }
                       }
                     }
@@ -12497,7 +12423,7 @@
                             ],
                             "properties": {
                               "modifiedAt": {
-                                "$ref": "#/components/schemas/Attachment/properties/createdAt"
+                                "$ref": "#/components/schemas/CreatedAt"
                               },
                               "modifiedBy": {
                                 "description": "User object containing the name and email of the user that made the change.",
@@ -12938,7 +12864,7 @@
                                 "description": "The date and time for when the sent update request was sent to the recipient.",
                                 "allOf": [
                                   {
-                                    "$ref": "#/components/schemas/Attachment/properties/createdAt"
+                                    "$ref": "#/components/schemas/CreatedAt"
                                   }
                                 ]
                               },
@@ -13999,10 +13925,10 @@
                               "$ref": "#/components/schemas/Cell/properties/image"
                             },
                             "createdAt": {
-                              "$ref": "#/components/schemas/Attachment/properties/createdAt"
+                              "$ref": "#/components/schemas/CreatedAt"
                             },
                             "modifiedAt": {
-                              "$ref": "#/components/schemas/Attachment/properties/createdAt"
+                              "$ref": "#/components/schemas/CreatedAt"
                             },
                             "version": {
                               "description": "Sheet version number that is incremented every time a sheet is modified.",
@@ -14127,7 +14053,7 @@
                                     "description": "The date and time for when this request was originally created. Read-only.",
                                     "allOf": [
                                       {
-                                        "$ref": "#/components/schemas/Attachment/properties/createdAt"
+                                        "$ref": "#/components/schemas/CreatedAt"
                                       }
                                     ]
                                   },
@@ -14135,7 +14061,7 @@
                                     "description": "The date and time for when the last change was made to this request. Read-only.",
                                     "allOf": [
                                       {
-                                        "$ref": "#/components/schemas/Attachment/properties/createdAt"
+                                        "$ref": "#/components/schemas/CreatedAt"
                                       }
                                     ]
                                   },
@@ -14526,7 +14452,7 @@
               "schema": {
                 "oneOf": [
                   {
-                    "$ref": "#/paths/~1reports~1%7BreportId%7D~1shares/post/requestBody/content/application~1json/schema/oneOf/0"
+                    "$ref": "#/components/schemas/Share"
                   },
                   {
                     "type": "array",
@@ -14755,7 +14681,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/paths/~1reports~1%7BreportId%7D~1shares/post/requestBody/content/application~1json/schema/oneOf/0"
+                  "$ref": "#/components/schemas/Share"
                 }
               }
             }
@@ -15220,7 +15146,7 @@
                                     "readOnly": true
                                   },
                                   "accessLevel": {
-                                    "$ref": "#/components/schemas/Discussion/properties/accessLevel"
+                                    "$ref": "#/components/schemas/AccessLevel"
                                   },
                                   "permalink": {
                                     "description": "URL that represents a direct link to the dashboard in Smartsheet.",
@@ -15232,10 +15158,10 @@
                             ],
                             "properties": {
                               "createdAt": {
-                                "$ref": "#/components/schemas/Attachment/properties/createdAt"
+                                "$ref": "#/components/schemas/CreatedAt"
                               },
                               "modifiedAt": {
-                                "$ref": "#/components/schemas/Attachment/properties/createdAt"
+                                "$ref": "#/components/schemas/CreatedAt"
                               }
                             }
                           }
@@ -15636,7 +15562,7 @@
                               "readOnly": true
                             },
                             "accessLevel": {
-                              "$ref": "#/components/schemas/Discussion/properties/accessLevel"
+                              "$ref": "#/components/schemas/AccessLevel"
                             },
                             "permalink": {
                               "description": "URL that represents a direct link to the dashboard in Smartsheet.",
@@ -16022,7 +15948,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/paths/~1reports~1%7BreportId%7D~1shares/post/requestBody/content/application~1json/schema/oneOf/0"
+                "$ref": "#/components/schemas/Share"
               }
             }
           }
@@ -16243,7 +16169,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/paths/~1reports~1%7BreportId%7D~1shares/post/requestBody/content/application~1json/schema/oneOf/0"
+                  "$ref": "#/components/schemas/Share"
                 }
               }
             }
@@ -18490,7 +18416,7 @@
                                     "readOnly": true,
                                     "allOf": [
                                       {
-                                        "$ref": "#/components/schemas/Attachment/properties/createdAt"
+                                        "$ref": "#/components/schemas/CreatedAt"
                                       }
                                     ]
                                   },
@@ -18503,7 +18429,7 @@
                                     "readOnly": true,
                                     "allOf": [
                                       {
-                                        "$ref": "#/components/schemas/Attachment/properties/createdAt"
+                                        "$ref": "#/components/schemas/CreatedAt"
                                       }
                                     ]
                                   },
@@ -19713,7 +19639,7 @@
                         "result": {
                           "type": "array",
                           "items": {
-                            "$ref": "#/components/schemas/Folder/properties/folders/items"
+                            "$ref": "#/components/schemas/Folder"
                           }
                         }
                       }
@@ -19910,7 +19836,7 @@
               "schema": {
                 "oneOf": [
                   {
-                    "$ref": "#/paths/~1reports~1%7BreportId%7D~1shares/post/requestBody/content/application~1json/schema/oneOf/0"
+                    "$ref": "#/components/schemas/Share"
                   },
                   {
                     "type": "array",
@@ -20136,7 +20062,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/paths/~1reports~1%7BreportId%7D~1shares/post/requestBody/content/application~1json/schema/oneOf/0"
+                  "$ref": "#/components/schemas/Share"
                 }
               }
             }
@@ -20935,7 +20861,7 @@
             "description": "A timestamp of when the rule was originally added.",
             "allOf": [
               {
-                "$ref": "#/components/schemas/Attachment/properties/createdAt"
+                "$ref": "#/components/schemas/CreatedAt"
               }
             ]
           },
@@ -20972,7 +20898,7 @@
             "description": "The datetime for when the change was made to the rule.",
             "allOf": [
               {
-                "$ref": "#/components/schemas/Attachment/properties/createdAt"
+                "$ref": "#/components/schemas/CreatedAt"
               }
             ]
           },
@@ -21496,7 +21422,7 @@
                 }
               },
               "createdAt": {
-                "$ref": "#/components/schemas/Attachment/properties/createdAt"
+                "$ref": "#/components/schemas/CreatedAt"
               },
               "createdBy": {
                 "description": "User object containing name and email of the creator of this summary field.",
@@ -21538,7 +21464,7 @@
                 "type": "boolean"
               },
               "modifiedAt": {
-                "$ref": "#/components/schemas/Attachment/properties/createdAt"
+                "$ref": "#/components/schemas/CreatedAt"
               },
               "modifiedBy": {
                 "description": "User object containing name and email of the user who most recently modified this summary field.",
@@ -21605,7 +21531,7 @@
         ],
         "properties": {
           "modifiedAt": {
-            "$ref": "#/components/schemas/Attachment/properties/createdAt"
+            "$ref": "#/components/schemas/CreatedAt"
           },
           "modifiedBy": {
             "description": "User object containing the name and email of the user that made the change.",
@@ -22523,7 +22449,7 @@
                   ]
                 },
                 "createdAt": {
-                  "$ref": "#/components/schemas/Attachment/properties/createdAt"
+                  "$ref": "#/components/schemas/CreatedAt"
                 },
                 "createdBy": {
                   "description": "`User` object containing `name` and `email` of the user who created this attachment.\n",
@@ -22553,7 +22479,7 @@
             }
           },
           "createdAt": {
-            "$ref": "#/components/schemas/Attachment/properties/createdAt"
+            "$ref": "#/components/schemas/CreatedAt"
           },
           "createdBy": {
             "description": "User object containing name and email of the creator of this comment.",
@@ -22573,7 +22499,7 @@
             "type": "number"
           },
           "modifiedAt": {
-            "$ref": "#/components/schemas/Attachment/properties/createdAt"
+            "$ref": "#/components/schemas/CreatedAt"
           },
           "text": {
             "description": "Comment body.",
@@ -22694,6 +22620,18 @@
           }
         }
       },
+      "CreatedAt": {
+            "oneOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "number"
+              }
+            ],
+            "readOnly": true
+          },
       "Criteria": {
         "type": "object",
         "properties": {
@@ -22833,7 +22771,7 @@
                   }
                 },
                 "createdAt": {
-                  "$ref": "#/components/schemas/Attachment/properties/createdAt"
+                  "$ref": "#/components/schemas/CreatedAt"
                 },
                 "createdBy": {
                   "description": "User object containing name and email of the creator of this comment.",
@@ -22853,7 +22791,7 @@
                   "type": "number"
                 },
                 "modifiedAt": {
-                  "$ref": "#/components/schemas/Attachment/properties/createdAt"
+                  "$ref": "#/components/schemas/CreatedAt"
                 },
                 "text": {
                   "description": "Comment body.",
@@ -22882,7 +22820,7 @@
             ]
           },
           "lastCommentedAt": {
-            "$ref": "#/components/schemas/Attachment/properties/createdAt"
+            "$ref": "#/components/schemas/CreatedAt"
           },
           "lastCommentedUser": {
             "description": "`User` object containing `name` and `email` of the user who last commented on the discussion.\n",
@@ -23184,511 +23122,8 @@
         }
       },
       "Folder": {
-        "description": "Can contain dashboards, folders, reports, sheets, or templates.",
-        "type": "object",
-        "properties": {
-          "id": {
-            "description": "Folder Id.",
-            "type": "number"
-          },
-          "favorite": {
-            "description": "Returned only if the user has marked the folder as a favorite in their \"Home\" tab (value = true).",
-            "type": "boolean"
-          },
-          "folders": {
-            "description": "Folders contained in folder.",
-            "type": "array",
-            "items": {
-              "description": "Can contain dashboards, folders, reports, sheets, or templates.",
-              "type": "object",
-              "properties": {
-                "id": {
-                  "description": "Folder Id.",
-                  "type": "number"
-                },
-                "favorite": {
-                  "description": "Returned only if the user has marked the folder as a favorite in their \"Home\" tab (value = true).",
-                  "type": "boolean"
-                },
-                "folders": {
-                  "description": "Folders contained in folder.",
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Folder/properties/folders/items"
-                  }
-                },
-                "name": {
-                  "description": "Folder name.",
-                  "type": "string"
-                },
-                "permalink": {
-                  "description": "URL that represents a direct link to the folder in Smartsheet.",
-                  "type": "string"
-                },
-                "reports": {
-                  "description": "Reports contained in folder.",
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Folder/properties/reports/items"
-                  }
-                },
-                "sheets": {
-                  "description": "Sheets contained in folder.",
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Folder/properties/sheets/items"
-                  }
-                },
-                "sights": {
-                  "description": "Dashboards contained in folder.",
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Folder/properties/sights/items"
-                  }
-                },
-                "templates": {
-                  "description": "Templates contained in folder.",
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Folder/properties/templates/items"
-                  }
-                }
-              }
-            }
-          },
-          "name": {
-            "description": "Folder name.",
-            "type": "string"
-          },
-          "permalink": {
-            "description": "URL that represents a direct link to the folder in Smartsheet.",
-            "type": "string"
-          },
-          "reports": {
-            "description": "Reports contained in folder.",
-            "type": "array",
-            "items": {
-              "allOf": [
-                {
-                  "$ref": "#/components/schemas/Folder/properties/sheets/items"
-                }
-              ],
-              "type": "object",
-              "properties": {
-                "scope": {
-                  "$ref": "#/components/schemas/Report/properties/scope"
-                },
-                "sourceSheets": {
-                  "type": "array",
-                  "description": "An array of Sheet objects (without rows), representing the sheets that rows in the report originated from. Only included in the Get Report response if the include parameter specifies sourceSheets.",
-                  "items": {
-                    "$ref": "#/components/schemas/Folder/properties/sheets/items"
-                  }
-                },
-                "isSummaryReport": {
-                  "type": "boolean",
-                  "description": "A boolean to represent whether the report is a sheet summary report or not. If this property is false, it is a row report."
-                }
-              }
-            }
-          },
-          "sheets": {
-            "description": "Sheets contained in folder.",
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "id": {
-                  "description": "Sheet Id.",
-                  "type": "number"
-                },
-                "fromId": {
-                  "description": "The Id of the template from which to create the sheet. This attribute can be specified in a request, but is never present in a response.",
-                  "type": "number"
-                },
-                "ownerId": {
-                  "description": "User Id of the sheet owner.",
-                  "type": "number"
-                },
-                "accessLevel": {
-                  "$ref": "#/components/schemas/Discussion/properties/accessLevel"
-                },
-                "attachments": {
-                  "description": "Array of Attachment objects.\nOnly returned if the [include](../../tag/sheets#operation/getSheet) query string parameter contains **attachments**.\n",
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Comment/properties/attachments/items"
-                  }
-                },
-                "columns": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/CellLinkWidgetContent/properties/columns/items"
-                  }
-                },
-                "createdAt": {
-                  "$ref": "#/components/schemas/Attachment/properties/createdAt"
-                },
-                "crossSheetReferences": {
-                  "description": "Array of CrossSheetReference objects.\nOnly returned if the [include](../../tag/sheets#operation/getSheet) query string parameter contains **crossSheetReferences**.\n",
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Sheet/properties/crossSheetReferences/items"
-                  }
-                },
-                "dependenciesEnabled": {
-                  "description": "Indicates whether dependencies are enabled.",
-                  "type": "boolean"
-                },
-                "discussions": {
-                  "description": "Array of Discussion objects\nOnly returned if the [include](../../tag/sheets#operation/getSheet) query string parameter contains **discussions**.\n",
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Proof/properties/discussions/items"
-                  }
-                },
-                "effectiveAttachmentOptions": {
-                  "description": "Array of enum strings (see [Attachment.attachmentType](../../tag/attachmentsDescription) indicating the allowable attachment options for the current user and sheet.\n",
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                },
-                "favorite": {
-                  "description": "Returned only if the user has marked this sheet as a favorite in their Home tab (value = **true**).",
-                  "type": "boolean"
-                },
-                "ganttEnabled": {
-                  "description": "Indicates whether \"Gantt View\" is enabled.",
-                  "type": "boolean"
-                },
-                "hasSummaryFields": {
-                  "description": "Indicates whether a sheet summary is present.",
-                  "type": "boolean"
-                },
-                "modifiedAt": {
-                  "$ref": "#/components/schemas/Attachment/properties/createdAt"
-                },
-                "name": {
-                  "description": "Sheet name.",
-                  "type": "string"
-                },
-                "owner": {
-                  "description": "Email address of the sheet owner.",
-                  "type": "string"
-                },
-                "permalink": {
-                  "description": "URL that represents a direct link to the sheet in Smartsheet.",
-                  "type": "string"
-                },
-                "projectSettings": {
-                  "$ref": "#/components/schemas/Sheet/properties/projectSettings"
-                },
-                "readOnly": {
-                  "description": "Returned only if the sheet belongs to an expired trial (value = **true**).",
-                  "type": "boolean"
-                },
-                "resourceManagementEnabled": {
-                  "description": "Indicates that resource management is enabled.",
-                  "type": "boolean"
-                },
-                "rows": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/ReportRow/allOf/0"
-                  }
-                },
-                "showParentRowsForFilters": {
-                  "description": "Returned only if there are column filters on the sheet. Value = **true** if \"show parent rows\" is enabled for the filters.",
-                  "type": "boolean"
-                },
-                "source": {
-                  "$ref": "#/components/schemas/Sheet/properties/source"
-                },
-                "summary": {
-                  "$ref": "#/components/schemas/Sheet/properties/summary"
-                },
-                "totalRowCount": {
-                  "description": "The total number of rows in the sheet.",
-                  "type": "number"
-                },
-                "userPermissions": {
-                  "$ref": "#/components/schemas/Sheet/properties/userPermissions"
-                },
-                "userSettings": {
-                  "$ref": "#/components/schemas/Sheet/properties/userSettings"
-                },
-                "version": {
-                  "description": "A number that is incremented every time a sheet is modified.",
-                  "type": "number"
-                },
-                "workspace": {
-                  "$ref": "#/components/schemas/Home/properties/workspaces/items"
-                }
-              }
-            }
-          },
-          "sights": {
-            "description": "Dashboards contained in folder.",
-            "type": "array",
-            "items": {
-              "type": "object",
-              "allOf": [
-                {
-                  "type": "object",
-                  "allOf": [
-                    {
-                      "type": "object",
-                      "allOf": [
-                        {
-                          "type": "object",
-                          "properties": {
-                            "name": {
-                              "description": "Dashboard name.",
-                              "type": "string"
-                            }
-                          }
-                        }
-                      ],
-                      "properties": {
-                        "id": {
-                          "description": "Dashboard Id.",
-                          "type": "number",
-                          "readOnly": true
-                        },
-                        "accessLevel": {
-                          "$ref": "#/components/schemas/Discussion/properties/accessLevel"
-                        },
-                        "permalink": {
-                          "description": "URL that represents a direct link to the dashboard in Smartsheet.",
-                          "type": "string",
-                          "readOnly": true
-                        }
-                      }
-                    }
-                  ],
-                  "properties": {
-                    "createdAt": {
-                      "$ref": "#/components/schemas/Attachment/properties/createdAt"
-                    },
-                    "modifiedAt": {
-                      "$ref": "#/components/schemas/Attachment/properties/createdAt"
-                    }
-                  }
-                }
-              ],
-              "properties": {
-                "backgroundColor": {
-                  "description": "The hex color, for instance `#E6F5FE`.",
-                  "type": "string",
-                  "readOnly": true
-                },
-                "columnCount": {
-                  "description": "Number of columns that the dashboard contains.",
-                  "type": "number",
-                  "readOnly": true
-                },
-                "favorite": {
-                  "description": "Indicates whether the user has marked the dashboard as a favorite.",
-                  "type": "boolean",
-                  "readOnly": true
-                },
-                "source": {
-                  "$ref": "#/components/schemas/Sheet/properties/source"
-                },
-                "widgets": {
-                  "readOnly": true,
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Sight/properties/widgets/items"
-                  }
-                },
-                "workspace": {
-                  "$ref": "#/components/schemas/Home/properties/workspaces/items"
-                }
-              }
-            }
-          },
-          "templates": {
-            "description": "Templates contained in folder.",
-            "type": "array",
-            "items": {
-              "description": "A template can be used to create a sheet.",
-              "type": "object",
-              "properties": {
-                "id": {
-                  "description": "Template Id.",
-                  "type": "number"
-                },
-                "type": {
-                  "description": "Type of template. Only applicable to public templates.",
-                  "type": "string",
-                  "enum": [
-                    "report",
-                    "sheet"
-                  ]
-                },
-                "accessLevel": {
-                  "$ref": "#/components/schemas/Discussion/properties/accessLevel"
-                },
-                "blank": {
-                  "description": "Indicates whether the template is blank. Only applicable to public templates.",
-                  "type": "boolean"
-                },
-                "categories": {
-                  "description": "Indicates whether the template is blank. Only applicable to public templates.",
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                },
-                "description": {
-                  "description": "Template description.",
-                  "type": "string"
-                },
-                "globalTemplate": {
-                  "description": "Type of global template. Only applicable to blank public templates.",
-                  "type": "string",
-                  "enum": [
-                    "BLANK_SHEET",
-                    "PROJECT_SHEET",
-                    "TASK_LIST"
-                  ]
-                },
-                "image": {
-                  "description": "URL to the small preview image for this template. Only applicable to non-blank public templates.",
-                  "type": "string"
-                },
-                "largeImage": {
-                  "description": "URL to the large preview image for this template. Only applicable to non-blank public templates.",
-                  "type": "string"
-                },
-                "locale": {
-                  "description": "Locale of the template. Only applicable to public templates.",
-                  "type": "string",
-                  "enum": [
-                    "ar_AE",
-                    "ar_BH",
-                    "ar_DZ",
-                    "ar_EG",
-                    "ar_IQ",
-                    "ar_JO",
-                    "ar_KW",
-                    "ar_LB",
-                    "ar_LY",
-                    "ar_MA",
-                    "ar_OM",
-                    "ar_QA",
-                    "ar_SA",
-                    "ar_SD",
-                    "ar_SY",
-                    "ar_TN",
-                    "ar_YE",
-                    "be_BY",
-                    "bg_BG",
-                    "ca_ES",
-                    "cs_CZ",
-                    "da_DK",
-                    "de_AT",
-                    "de_CH",
-                    "de_DE",
-                    "de_LU",
-                    "el_CY",
-                    "el_GR",
-                    "en_AU",
-                    "en_CA",
-                    "en_GB",
-                    "en_IE",
-                    "en_IN",
-                    "en_MT",
-                    "en_NZ",
-                    "en_PH",
-                    "en_SG",
-                    "en_US",
-                    "en_ZA",
-                    "es_AR",
-                    "es_BO",
-                    "es_CL",
-                    "es_CO",
-                    "es_CR",
-                    "es_DO",
-                    "es_EC",
-                    "es_ES",
-                    "es_GT",
-                    "es_HN",
-                    "es_MX",
-                    "es_NI",
-                    "es_PA",
-                    "es_PE",
-                    "es_PR",
-                    "es_PY",
-                    "es_SV",
-                    "es_US",
-                    "es_UY",
-                    "es_VE",
-                    "et_EE",
-                    "fi_FI",
-                    "fr_BE",
-                    "fr_CA",
-                    "fr_CH",
-                    "fr_FR",
-                    "fr_LU",
-                    "ga_IE",
-                    "hi_US",
-                    "hr_HR",
-                    "hu_HU",
-                    "in_ID",
-                    "is_IS",
-                    "it_CH",
-                    "it_IT",
-                    "iw_IL",
-                    "ja_JP",
-                    "ko_KR",
-                    "lt_LT",
-                    "lv_LV",
-                    "mk_MK",
-                    "ms_MY",
-                    "mt_MT",
-                    "nl_BE",
-                    "nl_NL",
-                    "no_NO",
-                    "pl_PL",
-                    "pt_BR",
-                    "pt_PT",
-                    "ro_RO",
-                    "ru_RU",
-                    "sk_SK",
-                    "sl_SI",
-                    "sq_AL",
-                    "sr_BA",
-                    "sr_CS",
-                    "sv_SE",
-                    "th_US",
-                    "tr_TR",
-                    "uk_UA",
-                    "vi_VN",
-                    "zh_CN",
-                    "zh_HK",
-                    "zh_SG",
-                    "zh_TW"
-                  ]
-                },
-                "name": {
-                  "type": "string",
-                  "description": "Type of global template.",
-                  "example": "Awesome Project Template"
-                },
-                "tags": {
-                  "description": "List of search tags for this template. Only applicable to non-blank public templates.",
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                }
-              }
-            }
-          }
-        }
+        "type": "array",
+        "$ref": "#/components/schemas/Folder"
       },
       "FontFamily": {
         "type": "object",
@@ -24153,10 +23588,10 @@
             "example": 2331373580117892
           },
           "createdAt": {
-            "$ref": "#/components/schemas/Attachment/properties/createdAt"
+            "$ref": "#/components/schemas/CreatedAt"
           },
           "modifiedAt": {
-            "$ref": "#/components/schemas/Attachment/properties/createdAt"
+            "$ref": "#/components/schemas/CreatedAt"
           }
         }
       },
@@ -24198,7 +23633,7 @@
           "folders": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/Folder/properties/folders/items"
+              "$ref": "#/components/schemas/Folder"
             }
           },
           "reports": {
@@ -24232,7 +23667,7 @@
               "type": "object",
               "properties": {
                 "accessLevel": {
-                  "$ref": "#/components/schemas/Discussion/properties/accessLevel"
+                  "$ref": "#/components/schemas/AccessLevel"
                 },
                 "id": {
                   "description": "Workspace Id.",
@@ -24246,7 +23681,7 @@
                   "description": "Folders contained in workspace.",
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Folder/properties/folders/items"
+                    "$ref": "#/components/schemas/Folder"
                   }
                 },
                 "name": {
@@ -24740,7 +24175,7 @@
             "type": "number"
           },
           "lastUpdatedAt": {
-            "$ref": "#/components/schemas/Attachment/properties/createdAt"
+            "$ref": "#/components/schemas/CreatedAt"
           },
           "lastUpdatedBy": {
             "description": "`User` object containing `name` and `email` of the user who last updated the proof.\n",
@@ -24768,7 +24203,7 @@
               "type": "object",
               "properties": {
                 "accessLevel": {
-                  "$ref": "#/components/schemas/Discussion/properties/accessLevel"
+                  "$ref": "#/components/schemas/AccessLevel"
                 },
                 "id": {
                   "description": "Discussion Id.",
@@ -24801,7 +24236,7 @@
                   ]
                 },
                 "lastCommentedAt": {
-                  "$ref": "#/components/schemas/Attachment/properties/createdAt"
+                  "$ref": "#/components/schemas/CreatedAt"
                 },
                 "lastCommentedUser": {
                   "description": "`User` object containing `name` and `email` of the user who last commented on the discussion.\n",
@@ -24873,7 +24308,7 @@
             ]
           },
           "sentAt": {
-            "$ref": "#/components/schemas/Attachment/properties/createdAt"
+            "$ref": "#/components/schemas/CreatedAt"
           },
           "isDownloadable": {
             "description": "Indicates whether the description is downloadable.",
@@ -25087,7 +24522,7 @@
                 "type": "number"
               },
               "accessLevel": {
-                "$ref": "#/components/schemas/Discussion/properties/accessLevel"
+                "$ref": "#/components/schemas/AccessLevel"
               },
               "attachments": {
                 "description": "Attachments on row. Only returned if the include query string parameter contains attachments.",
@@ -25116,7 +24551,7 @@
                 "example": ",,1,1,,,,,,,,,,,,,"
               },
               "createdAt": {
-                "$ref": "#/components/schemas/Attachment/properties/createdAt"
+                "$ref": "#/components/schemas/CreatedAt"
               },
               "createdBy": {
                 "description": "User object containing name and email of the creator of this row.",
@@ -25164,7 +24599,7 @@
                 "type": "boolean"
               },
               "modifiedAt": {
-                "$ref": "#/components/schemas/Attachment/properties/createdAt"
+                "$ref": "#/components/schemas/CreatedAt"
               },
               "modifiedBy": {
                 "description": "User object containing name and email of the last person to modify this row.",
@@ -25318,7 +24753,7 @@
             "type": "number"
           },
           "accessLevel": {
-            "$ref": "#/components/schemas/Discussion/properties/accessLevel"
+            "$ref": "#/components/schemas/AccessLevel"
           },
           "attachments": {
             "description": "Attachments on row. Only returned if the include query string parameter contains attachments.",
@@ -25347,7 +24782,7 @@
             "example": ",,1,1,,,,,,,,,,,,,"
           },
           "createdAt": {
-            "$ref": "#/components/schemas/Attachment/properties/createdAt"
+            "$ref": "#/components/schemas/CreatedAt"
           },
           "createdBy": {
             "description": "User object containing name and email of the creator of this row.",
@@ -25401,7 +24836,7 @@
                 "type": "number"
               },
               "lastUpdatedAt": {
-                "$ref": "#/components/schemas/Attachment/properties/createdAt"
+                "$ref": "#/components/schemas/CreatedAt"
               },
               "lastUpdatedBy": {
                 "description": "`User` object containing `name` and `email` of the user who last updated the proof.\n",
@@ -25457,7 +24892,7 @@
             "type": "boolean"
           },
           "modifiedAt": {
-            "$ref": "#/components/schemas/Attachment/properties/createdAt"
+            "$ref": "#/components/schemas/CreatedAt"
           },
           "modifiedBy": {
             "description": "User object containing name and email of the last person to modify this row.",
@@ -25605,7 +25040,7 @@
                 "description": "The date and time for when the last request was sent."
               },
               {
-                "$ref": "#/components/schemas/Attachment/properties/createdAt"
+                "$ref": "#/components/schemas/CreatedAt"
               }
             ]
           },
@@ -25615,7 +25050,7 @@
                 "description": "The date and time for when the next request is scheduled to send."
               },
               {
-                "$ref": "#/components/schemas/Attachment/properties/createdAt"
+                "$ref": "#/components/schemas/CreatedAt"
               }
             ]
           },
@@ -25806,7 +25241,7 @@
             "description": "The date and time for when the sent update request was sent to the recipient.",
             "allOf": [
               {
-                "$ref": "#/components/schemas/Attachment/properties/createdAt"
+                "$ref": "#/components/schemas/CreatedAt"
               }
             ]
           },
@@ -26228,14 +25663,14 @@
             "type": "string"
           },
           "accessLevel": {
-            "$ref": "#/components/schemas/Discussion/properties/accessLevel"
+            "$ref": "#/components/schemas/AccessLevel"
           },
           "ccMe": {
             "description": "Indicates whether to send a copy of the email to the sharer of the sheet. You can specify this attribute\nin a request, but it is never present in a response.\n",
             "type": "boolean"
           },
           "createdAt": {
-            "$ref": "#/components/schemas/Attachment/properties/createdAt"
+            "$ref": "#/components/schemas/CreatedAt"
           },
           "email": {
             "description": "User's primary email address for user shares; null for group shares.",
@@ -26246,7 +25681,7 @@
             "type": "string"
           },
           "modifiedAt": {
-            "$ref": "#/components/schemas/Attachment/properties/createdAt"
+            "$ref": "#/components/schemas/CreatedAt"
           },
           "name": {
             "description": "If a user share and user is also a contact, the user's full name. If a group share, the group's name.",
@@ -26287,7 +25722,7 @@
             "type": "number"
           },
           "accessLevel": {
-            "$ref": "#/components/schemas/Discussion/properties/accessLevel"
+            "$ref": "#/components/schemas/AccessLevel"
           },
           "attachments": {
             "description": "Array of Attachment objects.\nOnly returned if the [include](../../tag/sheets#operation/getSheet) query string parameter contains **attachments**.\n",
@@ -26303,7 +25738,7 @@
             }
           },
           "createdAt": {
-            "$ref": "#/components/schemas/Attachment/properties/createdAt"
+            "$ref": "#/components/schemas/CreatedAt"
           },
           "crossSheetReferences": {
             "description": "Array of CrossSheetReference objects.\nOnly returned if the [include](../../tag/sheets#operation/getSheet) query string parameter contains **crossSheetReferences**.\n",
@@ -26386,7 +25821,7 @@
             "type": "boolean"
           },
           "modifiedAt": {
-            "$ref": "#/components/schemas/Attachment/properties/createdAt"
+            "$ref": "#/components/schemas/CreatedAt"
           },
           "name": {
             "description": "Sheet name.",
@@ -26806,7 +26241,7 @@
                     "readOnly": true
                   },
                   "accessLevel": {
-                    "$ref": "#/components/schemas/Discussion/properties/accessLevel"
+                    "$ref": "#/components/schemas/AccessLevel"
                   },
                   "permalink": {
                     "description": "URL that represents a direct link to the dashboard in Smartsheet.",
@@ -26818,10 +26253,10 @@
             ],
             "properties": {
               "createdAt": {
-                "$ref": "#/components/schemas/Attachment/properties/createdAt"
+                "$ref": "#/components/schemas/CreatedAt"
               },
               "modifiedAt": {
-                "$ref": "#/components/schemas/Attachment/properties/createdAt"
+                "$ref": "#/components/schemas/CreatedAt"
               }
             }
           }
@@ -27068,7 +26503,7 @@
             }
           },
           "createdAt": {
-            "$ref": "#/components/schemas/Attachment/properties/createdAt"
+            "$ref": "#/components/schemas/CreatedAt"
           },
           "createdBy": {
             "description": "User object containing name and email of the creator of this summary field.",
@@ -27110,7 +26545,7 @@
             "type": "boolean"
           },
           "modifiedAt": {
-            "$ref": "#/components/schemas/Attachment/properties/createdAt"
+            "$ref": "#/components/schemas/CreatedAt"
           },
           "modifiedBy": {
             "description": "User object containing name and email of the user who most recently modified this summary field.",
@@ -27178,7 +26613,7 @@
             ]
           },
           "accessLevel": {
-            "$ref": "#/components/schemas/Discussion/properties/accessLevel"
+            "$ref": "#/components/schemas/AccessLevel"
           },
           "blank": {
             "description": "Indicates whether the template is blank. Only applicable to public templates.",
@@ -27433,7 +26868,7 @@
                 "description": "The date and time for when this request was originally created. Read-only.",
                 "allOf": [
                   {
-                    "$ref": "#/components/schemas/Attachment/properties/createdAt"
+                    "$ref": "#/components/schemas/CreatedAt"
                   }
                 ]
               },
@@ -27441,7 +26876,7 @@
                 "description": "The date and time for when the last change was made to this request. Read-only.",
                 "allOf": [
                   {
-                    "$ref": "#/components/schemas/Attachment/properties/createdAt"
+                    "$ref": "#/components/schemas/CreatedAt"
                   }
                 ]
               },
@@ -27520,7 +26955,7 @@
                             "description": "The date and time for when the last request was sent."
                           },
                           {
-                            "$ref": "#/components/schemas/Attachment/properties/createdAt"
+                            "$ref": "#/components/schemas/CreatedAt"
                           }
                         ]
                       },
@@ -27530,7 +26965,7 @@
                             "description": "The date and time for when the next request is scheduled to send."
                           },
                           {
-                            "$ref": "#/components/schemas/Attachment/properties/createdAt"
+                            "$ref": "#/components/schemas/CreatedAt"
                           }
                         ]
                       },
@@ -27947,7 +27382,7 @@
                 "readOnly": true,
                 "allOf": [
                   {
-                    "$ref": "#/components/schemas/Attachment/properties/createdAt"
+                    "$ref": "#/components/schemas/CreatedAt"
                   }
                 ]
               },
@@ -27960,7 +27395,7 @@
                 "readOnly": true,
                 "allOf": [
                   {
-                    "$ref": "#/components/schemas/Attachment/properties/createdAt"
+                    "$ref": "#/components/schemas/CreatedAt"
                   }
                 ]
               },
@@ -28601,7 +28036,7 @@
         "type": "object",
         "properties": {
           "accessLevel": {
-            "$ref": "#/components/schemas/Discussion/properties/accessLevel"
+            "$ref": "#/components/schemas/AccessLevel"
           },
           "id": {
             "description": "Workspace Id.",
@@ -28615,7 +28050,7 @@
             "description": "Folders contained in workspace.",
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/Folder/properties/folders/items"
+              "$ref": "#/components/schemas/Folder"
             }
           },
           "name": {
